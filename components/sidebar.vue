@@ -32,10 +32,13 @@
       <v-divider></v-divider>
       <change-language />
     </v-list>
+    <v-btn @click="toggleColorBlind">Color blind</v-btn>
   </div>
 </template>
 
 <script>
+import colors from 'vuetify/lib/util/colors'
+
 import SidebarListItem from './sidebar_list_item';
 import ChangeLanguage from './change_language';
 import LearnMore from './learn_more';
@@ -52,11 +55,32 @@ export default {
 
   mixins: [i18nMixin],
 
+  data() {
+    return {
+      colorblind: false
+    };
+  },
+
   props: {
     showBrand: {
       type: Boolean,
       required: false,
       default: true
+    }
+  },
+
+  methods: {
+    toggleColorBlind() {
+      if (this.colorBlind) {
+        this.$vuetify.theme.themes.light.success = '#4CAF50';
+        this.$vuetify.theme.themes.light.error = '#FF5252';
+        this.$vuetify.theme.themes.light.secondary = '#424242';
+      } else {
+        this.$vuetify.theme.themes.light.success = '#0C7BDC';
+        this.$vuetify.theme.themes.light.error = '#FFC20A';
+        this.$vuetify.theme.themes.light.secondary = colors.grey.base;
+      }
+      this.colorBlind = !this.colorBlind;
     }
   }
 }
